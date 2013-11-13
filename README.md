@@ -49,10 +49,11 @@ Create `cacheman-mongo` instance. `options` are mongo valid options including `p
 
 ```javascript
 var options = { 
-  db: 'my-cache-db', 
-  collection: 'my-collection', 
-  port: 9999, host: '127.0.0.1' 
-}
+  port: 9999,
+  host: '127.0.0.1',
+  db: 'my-cache-db',
+  collection: 'my-collection'
+};
 
 var cache = new CachemanMongo(options);
 ```
