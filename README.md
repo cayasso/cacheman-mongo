@@ -45,7 +45,7 @@ cache.set('my key', { foo: 'bar' }, function (error) {
 
 ### CachemanMongo([options])
 
-Create `cacheman-mongo` instance. `options` are mongo valid options including `port` and `host`.
+Create `cacheman-mongo` instance. `options` are mongo valid options including `port`, `host`, `db` and `collection`.
 
 ```javascript
 var cache = new CachemanMongo({ port: 9999, host: '127.0.0.1' });
