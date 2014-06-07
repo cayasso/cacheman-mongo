@@ -118,3 +118,44 @@ describe('cacheman-mongo', function () {
   });
 
 });
+
+describe('cacheman-mongo compression', function () {
+
+  before(function(done){
+    cache = new Cache({ compression: true }, {});
+    done();
+  });
+
+  after(function(done){
+    cache.clear('test');
+    done();
+  });
+
+  it('should store compressable item compressed', function (done) {
+    var value = Date.now().toString();
+
+    cache.set('test1', new Buffer(value), function (err) {
+      if (err) return done(err);
+      cache.get('test1', function (err, data) {
+        if (err) return done(err);
+        assert.equal(data.toString(), value);
+        done();
+      });
+    });
+  });
+
+  it('should store non-compressable item normally', function (done) {
+    var value = Date.now().toString();
+
+    cache.set('test1', value, function (err) {
+      if (err) return done(err);
+      cache.get('test1', function (err, data) {
+        if (err) return done(err);
+        assert.equal(data, value);
+        done();
+      });
+    });
+  });
+
+
+});
