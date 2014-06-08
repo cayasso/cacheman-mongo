@@ -1,4 +1,6 @@
 var assert = require('assert')
+  , fs = require('fs')
+  , crypto = require('crypto')
   , Cache = require('../')
   , cache;
 
@@ -157,5 +159,17 @@ describe('cacheman-mongo compression', function () {
     });
   });
 
+  it('should store large compressable item compressed', function (done) {
+    var value = fs.readFileSync('./test/large.bin'), // A file larger than the 16mb MongoDB document size limit
+        md5 = function(d){ return crypto.createHash('md5').update(d).digest('hex'); };
 
+    cache.set('test1', value, function (err) {
+      if (err) return done(err);
+      cache.get('test1', function (err, data) {
+        if (err) return done(err);
+        assert.equal(md5(data), md5(value));
+        done();
+      });
+    });
+  });
 });
