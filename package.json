@@ -25,6 +25,7 @@
     "mocha": "*"
   },
   "dependencies": {
-    "mongodb": "~1.3.x"
+    "mongodb": "~1.3.x",
+    "pre-commit": "^1.0.2"
   }
 }
