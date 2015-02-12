@@ -29,8 +29,6 @@ function MongoStore(conn, options) {
 
   var store = this;
 
-  options = options || {};
-
   if ('object' === typeof conn) {
     if ('function' !== typeof conn.collection) {
       options = conn;
