@@ -1,17 +1,19 @@
-var assert = require('assert')
-  , Cache = require('../')
-  , cache;
+var MongoClient = require('mongodb').MongoClient
+var assert = require('assert');
+var Cache = require('../');
+var cache;
+var uri = 'mongodb://127.0.0.1:27017/testing';
 
 describe('cacheman-mongo', function () {
 
   before(function(done){
-    cache = new Cache({}, {});
+    cache = new Cache({ host: '127.0.0.1', port: 27017, database: 'testing' });
     done();
   });
 
   after(function(done){
     cache.clear('test');
-    done();
+    cache.client.close(done);
   });
 
   it('should have main methods', function () {
@@ -20,7 +22,7 @@ describe('cacheman-mongo', function () {
     assert.ok(cache.del);
     assert.ok(cache.clear);
   });
-    
+
   it('should store items', function (done) {
     cache.set('test1', { a: 1 }, function (err) {
       if (err) return done(err);
@@ -105,15 +107,57 @@ describe('cacheman-mongo', function () {
 
   it('should expire key', function (done) {
     this.timeout(0);
-    cache.set('test1', { a: 1 }, 1, function (err) {
+    cache.set('test7', { a: 1 }, 1, function (err) {
       if (err) return done(err);
       setTimeout(function () {
-        cache.get('test1', function (err, data) {
+        cache.get('test7', function (err, data) {
         if (err) return done(err);
           assert.equal(data, null);
           done();
         });
       }, 1100);
+    });
+  });
+
+  it('should allow passing mongodb connection string', function (done) {
+    cache = new Cache(uri);
+    cache.set('test8', { a: 1 }, function (err) {
+      if (err) return done(err);
+      cache.get('test8', function (err, data) {
+        if (err) return done(err);
+        assert.equal(data.a, 1);
+        done();
+      });
+    });
+  });
+
+  it('should allow passing mongo db instance as first argument', function (done) {
+    MongoClient.connect(uri, function (err, db) {
+      if (err) return done(err);
+      cache = new Cache(db);
+      cache.set('test9', { a: 1 }, function (err) {
+        if (err) return done(err);
+        cache.get('test9', function (err, data) {
+          if (err) return done(err);
+          assert.equal(data.a, 1);
+          done();
+        });
+      });
+    });
+  });
+
+  it('should sllow passing mongo db instance as client in object', function (done) {
+    MongoClient.connect(uri, function (err, db) {
+      if (err) return done(err);
+      cache = new Cache({ client: db });
+      cache.set('test9', { a: 1 }, function (err) {
+        if (err) return done(err);
+        cache.get('test9', function (err, data) {
+          if (err) return done(err);
+          assert.equal(data.a, 1);
+          done();
+        });
+      });
     });
   });
 
