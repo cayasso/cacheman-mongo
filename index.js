@@ -37,6 +37,7 @@ function MongoStore(conn, options) {
       } else if (options.client) {
         store.client = options.client
       } else {
+        options.database = options.database || options.db;
         options.hosts = options.hosts || [{ 
           port: options.port, 
           host: options.host 
