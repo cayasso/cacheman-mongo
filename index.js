@@ -208,11 +208,11 @@ function compress(data, fn) {
   // Data is not of a "compressable" type (currently only Buffer)
   if (!Buffer.isBuffer(data.value)) return fn(null, data);
 
-  zlib.gzip(data.value, function(err, compressedvalue){
+  zlib.gzip(data.value, function(err, val){
     // If compression was successful, then use the compressed data.
     // Otherwise, save the original data.
     if (!err) {
-      data.value = compressedvalue;
+      data.value = val;
       data.compressed = true;
     }
 

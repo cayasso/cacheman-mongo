@@ -54,7 +54,8 @@ var options = {
   username: 'beto',
   password: 'my-p@ssw0rd'
   database: 'my-cache-db',
-  collection: 'my-collection'
+  collection: 'my-collection',
+  compression: false
 };
 
 var cache = new CachemanMongo(options);
@@ -81,6 +82,17 @@ MongoClient.connect('mongodb://127.0.0.1:27017/blog', function (err, db) {
 });
 ```
 
+#### Cache Value Compression
+
+MongoDB has a 16MB document size limit, and, currently, does not have built in support for compression. You can enable cache value compression for large Buffers by setting the `compression` options to `true`, this will use the native node `zlib` module to compress with `gzip`. It only compresses Buffers because of the complexity in correctly decompressing and deserializing the variety of data structures and string encodings.
+
+Thanks to @Jared314 for adding this [feature](https://github.com/cayasso/cacheman-mongo/pull/2).
+
+```javascript
+var cache = new Cache({ compression: true });
+cache.set('test1', new Buffer("something big"), function (err) {...});
+
+```
 ### cache.set(key, value, [ttl, [fn]])
 
 Stores or updates a value.
