@@ -45,17 +45,40 @@ cache.set('my key', { foo: 'bar' }, function (error) {
 
 ### CachemanMongo([options])
 
-Create `cacheman-mongo` instance. `options` are mongo valid options including `port`, `host`, `db` and `collection`.
+Create `cacheman-mongo` instance. `options` are mongo valid options including `port`, `host`, `database` and `collection`.
 
 ```javascript
 var options = { 
   port: 9999,
   host: '127.0.0.1',
-  db: 'my-cache-db',
+  database: 'my-cache-db',
   collection: 'my-collection'
 };
 
 var cache = new CachemanMongo(options);
+```
+
+You can also pass a valid mongodb connection string as first arguments like this:
+
+```javascript
+var options = {
+  collection: 'account'
+};
+
+var cache = new CachemanMongo(mongodb://127.0.0.1:27017/blog', options);
+```
+
+Or pass a mongodb db instance directly as client:
+
+```javascript
+MongoClient.connect(mongodb://127.0.0.1:27017/blog', function (err, db) {
+  var cache = new CachemanMongo(db, { collection: 'account' });
+
+  // or
+  cache = new CachemanMongo({ client: db, collection: 'account' });
+});
+
+
 ```
 
 ### cache.set(key, value, [ttl, [fn]])
