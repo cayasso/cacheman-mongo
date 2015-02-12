@@ -51,6 +51,8 @@ Create `cacheman-mongo` instance. `options` are mongo valid options including `p
 var options = { 
   port: 9999,
   host: '127.0.0.1',
+  username: 'beto',
+  password: 'my-p@ssw0rd'
   database: 'my-cache-db',
   collection: 'my-collection'
 };
@@ -77,8 +79,6 @@ MongoClient.connect('mongodb://127.0.0.1:27017/blog', function (err, db) {
   // or
   cache = new CachemanMongo({ client: db, collection: 'account' });
 });
-
-
 ```
 
 ### cache.set(key, value, [ttl, [fn]])
