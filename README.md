@@ -65,13 +65,13 @@ var options = {
   collection: 'account'
 };
 
-var cache = new CachemanMongo(mongodb://127.0.0.1:27017/blog', options);
+var cache = new CachemanMongo('mongodb://127.0.0.1:27017/blog', options);
 ```
 
 Or pass a mongodb db instance directly as client:
 
 ```javascript
-MongoClient.connect(mongodb://127.0.0.1:27017/blog', function (err, db) {
+MongoClient.connect('mongodb://127.0.0.1:27017/blog', function (err, db) {
   var cache = new CachemanMongo(db, { collection: 'account' });
 
   // or
