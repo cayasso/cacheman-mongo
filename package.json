@@ -25,7 +25,7 @@
     "mocha": "*"
   },
   "dependencies": {
-    "mongodb": "^1.4.30",
+    "mongodb": "^2.0.43",
     "mongodb-uri": "^0.9.7",
     "pre-commit": "^1.0.2",
     "thunky": "^0.1.0"
