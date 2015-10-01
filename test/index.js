@@ -1,21 +1,23 @@
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert')
-  , crypto = require('crypto')
-  , Cache = require('../')
-  , fs = require('fs')
-  , uri = 'mongodb://127.0.0.1:27017/testing'
-  , cache;
+import { MongoClient } from 'mongodb';
+import Cache from '../lib/index';
+import assert from 'assert';
+import crypto from 'crypto';
+import fs from 'fs';
+
+const uri = 'mongodb://127.0.0.1:27017/cacheman-mongo-test'
+let cache;
 
 describe('cacheman-mongo', function () {
 
   before(function(done){
-    cache = new Cache({ host: '127.0.0.1', port: 27017, database: 'testing' });
+    cache = new Cache({ host: '127.0.0.1', port: 27017, database: 'cacheman-mongo-test' });
     done();
   });
 
   after(function(done){
-    cache.clear('test');
-    cache.client.close(done);
+    cache.clear(function() {
+      cache.client.close(done);
+    });
   });
 
   it('should have main methods', function () {
@@ -70,7 +72,7 @@ describe('cacheman-mongo', function () {
   });
 
   it('should delete items', function (done) {
-    var value = Date.now();
+    let value = Date.now();
     cache.set('test5', value, function (err) {
       if (err) return done(err);
       cache.get('test5', function (err, data) {
@@ -89,13 +91,13 @@ describe('cacheman-mongo', function () {
   });
 
   it('should clear items', function (done) {
-    var value = Date.now();
+    let value = Date.now();
     cache.set('test6', value, function (err) {
       if (err) return done(err);
       cache.get('test6', function (err, data) {
         if (err) return done(err);
         assert.equal(data, value);
-        cache.clear('', function (err) {
+        cache.clear(function (err) {
           if (err) return done(err);
           cache.get('test6', function (err, data) {
             if (err) return done(err);
@@ -176,7 +178,7 @@ describe('cacheman-mongo', function () {
     });
 
     it('should store compressable item compressed', function (done) {
-      var value = Date.now().toString();
+      let value = Date.now().toString();
 
       cache.set('test1', new Buffer(value), function (err) {
         if (err) return done(err);
@@ -189,7 +191,7 @@ describe('cacheman-mongo', function () {
     });
 
     it('should store non-compressable item normally', function (done) {
-      var value = Date.now().toString();
+      let value = Date.now().toString();
 
       cache.set('test1', value, function (err) {
         if (err) return done(err);
@@ -202,7 +204,7 @@ describe('cacheman-mongo', function () {
     });
 
     it('should store large compressable item compressed', function (done) {
-      var value = fs.readFileSync('./test/large.bin'), // A file larger than the 16mb MongoDB document size limit
+      let value = fs.readFileSync('./test/large.bin'), // A file larger than the 16mb MongoDB document size limit
           md5 = function(d){ return crypto.createHash('md5').update(d).digest('hex'); };
 
       cache.set('test1', value, function (err) {

@@ -3,9 +3,10 @@
   "version": "0.2.1",
   "description": "MongoDB standalone caching library for Node.JS and also cache engine for cacheman",
   "author": "Jonathan Brumley <cayasso@gmail.com>",
-  "main": "index.js",
+  "main": "./node/index",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "postinstall": "make"
   },
   "repository": {
     "type": "git",
@@ -25,9 +26,10 @@
     "mocha": "*"
   },
   "dependencies": {
-    "mongodb": "^1.4.30",
+    "babel": "^5.8.23",
+    "mongodb": "^2.0.45",
     "mongodb-uri": "^0.9.7",
-    "pre-commit": "^1.0.2",
+    "pre-commit": "^1.1.1",
     "thunky": "^0.1.0"
   }
 }
