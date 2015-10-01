@@ -16,7 +16,7 @@ describe('cacheman-mongo', function () {
 
   after(function(done){
     cache.clear(function() {
-      cache.client.close(done);
+      cache.client.dropDatabase(done);
     });
   });
 
@@ -165,6 +165,25 @@ describe('cacheman-mongo', function () {
     });
   });
 
+  it('should get the same value subsequently', function(done) {
+    let val = 'Test Value';
+    cache.set('test', 'Test Value', function() {
+      cache.get('test', function(err, data) {
+        if (err) return done(err);
+        assert.strictEqual(data, val);
+        cache.get('test', function(err, data) {
+          if (err) return done(err);
+          assert.strictEqual(data, val);
+          cache.get('test', function(err, data) {
+            if (err) return done(err);
+             assert.strictEqual(data, val);
+             done();
+          });
+        });
+      });
+    });
+  });
+
   describe('cacheman-mongo compression', function () {
 
     before(function(done){
@@ -173,8 +192,7 @@ describe('cacheman-mongo', function () {
     });
 
     after(function(done){
-      cache.clear('test');
-      done();
+      cache.clear(done);
     });
 
     it('should store compressable item compressed', function (done) {
