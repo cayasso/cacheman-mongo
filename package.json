@@ -23,13 +23,13 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "mocha": "*"
+    "mocha": "^2.3.3",
+    "pre-commit": "^1.1.1"
   },
   "dependencies": {
     "babel": "^5.8.23",
     "mongodb": "^2.0.45",
     "mongodb-uri": "^0.9.7",
-    "pre-commit": "^1.1.1",
     "thunky": "^0.1.0"
   }
 }
