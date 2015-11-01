@@ -12,8 +12,7 @@ clean:
 test:
 	@./node_modules/.bin/mocha \
 		--reporter spec \
-		--require babel/register \
 		--recursive \
 		test
 
-.PHONY: all clean test
+.PHONY: all clean test node

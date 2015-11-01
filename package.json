@@ -6,7 +6,7 @@
   "main": "./node/index",
   "scripts": {
     "test": "make test",
-    "postinstall": "make"
+    "prepublish": "make"
   },
   "repository": {
     "type": "git",
@@ -23,13 +23,13 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "babel": "^5.8.29",
     "mocha": "*"
   },
   "dependencies": {
-    "babel": "^5.8.23",
-    "mongodb": "^2.0.45",
+    "mongodb": "^2.0.47",
     "mongodb-uri": "^0.9.7",
-    "pre-commit": "^1.1.1",
+    "pre-commit": "^1.1.2",
     "thunky": "^0.1.0"
   }
 }
