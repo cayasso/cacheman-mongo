@@ -1,6 +1,6 @@
 {
   "name": "cacheman-mongo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MongoDB standalone caching library for Node.JS and also cache engine for cacheman",
   "author": "Jonathan Brumley <cayasso@gmail.com>",
   "main": "./node/index",
