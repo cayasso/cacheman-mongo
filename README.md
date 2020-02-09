@@ -5,6 +5,8 @@
 
 MongoDB standalone caching library for Node.JS and also cache engine for [cacheman](https://github.com/cayasso/cacheman).
 
+Version 2 supports mongodb client version 3, for mongodb client version 2 use version 1
+
 ## Instalation
 
 ``` bash
